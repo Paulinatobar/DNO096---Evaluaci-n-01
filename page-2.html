@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <title>📝 Evaluación N°1</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/p5.js"></script>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <header>
+        <p>
+            <a href="index.html">Hola</a>
+            <a href="page-1.html">Caleidoscopio</a>
+            <a href="page-2.html" class="activo">Condiciones</a>
+            <a href="page-3.html">Poema Aleatorio</a>
+            <a href="page-4.html">Orbit Control</a>
+        </p>
+        <h1>Condiciones</h1>
+    </header>
+    <main></main>
+    <aside>
+        <button onclick="foto()">🖼️ DESCARGA TU FOTO!</button>
+    </aside>
+
+    <!-- Script p5.js -->
+    <script>
+        let circlePositionX, circlePositionY;
+        let circleSpeedX, circleSpeedY;
+        let circleHue;
+        let circleRadius = 50;
+        let isAnimating = false; // Variable para controlar el estado de la animación
+        let lastX, lastY; // Variables para la posición anterior del círculo
+
+        function setup() {
+            createCanvas(windowWidth, windowHeight);
+            background("#AD1457");
+
+            // Inicializa las variables del círculo
+            circlePositionX = width / 2;
+            circlePositionY = height / 2;
+            circleSpeedX = 3;
+            circleSpeedY = 2;
+            circleHue = 0;
+            lastX = circlePositionX;
+            lastY = circlePositionY;
+
+            // Define el modo de color
+            colorMode(HSB);
+
+            // Establece el peso del trazo
+            strokeWeight(4);
+
+            // Crea una descripción accesible para lectores de pantalla
+            describe('A circle starts in the center of the canvas. When the user clicks, the circle bounces around the canvas, leaving a rainbow trail of lines behind it.');
+        }
+
+        function draw() {
+            if (isAnimating) { // Solo dibuja si la animación está activa
+                // Establece el color del trazo según el matiz actual
+                stroke(circleHue, 80, 90);
+
+                // Dibuja una línea desde la posición anterior del círculo hasta la posición actual
+                line(lastX, lastY, circlePositionX, circlePositionY);
+
+                // Actualiza la posición anterior
+                lastX = circlePositionX;
+                lastY = circlePositionY;
+
+                // Establece el color de relleno según la posición del círculo
+                if (circlePositionX >= 100 && circlePositionX <= 300) {
+                    fill(0);
+                } else {
+                    fill(255);
+                }
+
+                // Dibuja el círculo en la posición actual
+                circle(circlePositionX, circlePositionY, circleRadius);
+
+                // Añade velocidad a la posición del círculo
+                circlePositionX += circleSpeedX;
+                circlePositionY += circleSpeedY;
+
+                // Aumenta el matiz
+                circleHue += 1;
+                if (circleHue >= 360) {
+                    circleHue = 0;
+                }
+
+                // Reversa la velocidad horizontal si el círculo toca el borde
+                if (circlePositionX < circleRadius || circlePositionX > width - circleRadius) {
+                    circleSpeedX = -circleSpeedX;
+                }
+
+                // Reversa la velocidad vertical si el círculo toca el borde
+                if (circlePositionY < circleRadius || circlePositionY > height - circleRadius) {
+                    circleSpeedY = -circleSpeedY;
+                }
+            }
+        }
+
+        function mousePressed() {
+            isAnimating = !isAnimating; // Alterna el estado de la animación
+        }
+
+        function foto() {
+            saveCanvas("animaciones", "jpg"); // Guarda la imagen con el nombre "animaciones.jpg"
+        }
+
+        function windowResized() {
+            resizeCanvas(windowWidth, windowHeight);
+            background("#AD1457"); // Vuelve a dibujar el fondo al redimensionar
+        }
+    </script>
+</body>
+</html>
