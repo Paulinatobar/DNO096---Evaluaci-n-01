@@ -14,18 +14,21 @@
             <a href="page-2.html">Condiciones</a>
             <a href="page-3.html" class="activo">Poema Aleatorio</a>
             <a href="page-4.html">Orbit Control</a>
-            <a href="page-5.html" > Apuntar</a>
         </p>
         <h1>Poema Aleatorio</h1>
     </header>
-    <main></main>
+    
+    <main>
+        <!-- Contenedor para el poema -->
+        <div id="poema-container"></div>
+    </main>
+
     <aside>
         <button onclick="foto()">🖼️ DESCARGAR EL POEMA!</button>
     </aside>
 
     <!-- Script p5.js -->
     <script>
-        const marginTop = 80; // Margen superior en píxeles (altura del encabezado + margen adicional)
         const marginSides = 50; // Márgenes laterales en píxeles
 
         let words = ['que', 'tiemble', 'el', 'Estado', 'los', 'cielos', 'calles',
@@ -36,7 +39,9 @@
         let hue;
 
         function setup() {
-            createCanvas(windowWidth - marginSides * 2, windowHeight - marginTop - marginSides);
+            // Crea el lienzo dentro del contenedor del poema
+            const canvas = createCanvas(windowWidth - marginSides * 2, 400); // Altura fija para el poema
+            canvas.parent('poema-container');
             background("#AD1457");
             textFont('Space Mono');
             textAlign(CENTER);
@@ -45,18 +50,18 @@
             // Define hue as a random value
             hue = random(180, 360);
 
-            // Draw words in random positions within margins
+            // Obtén la altura del header dinámicamente
+            const headerHeight = document.querySelector('header').offsetHeight;
+
+            // Dibujar palabras en posiciones aleatorias dentro del contenedor,
+            // asegurando que se dibujen debajo del h1
             for (let i = 0; i < 20; i++) {
                 textSize(random(16, 48));
                 fill(hue, 200, random(50, 95));
                 let x = random(marginSides, width - marginSides);
-                let y = random(marginTop, height - marginSides);
+                let y = random(headerHeight, height - 50); // Inicio debajo del header
                 text(random(words), x, y);
             }
-        }
-
-        function draw() {
-            // No need to do anything in the draw function for this example
         }
 
         function foto() {
@@ -64,15 +69,17 @@
         }
 
         function windowResized() {
-            resizeCanvas(windowWidth - marginSides * 2, windowHeight - marginTop - marginSides);
+            resizeCanvas(windowWidth - marginSides * 2, 800);
             background("#AD1457");
 
-            // Redibujar las palabras respetando los márgenes
+            const headerHeight = document.querySelector('header').offsetHeight;
+
+            // Redibujar las palabras respetando el margen superior del header
             for (let i = 0; i < 20; i++) {
                 textSize(random(16, 48));
                 fill(hue, 200, random(50, 95));
                 let x = random(marginSides, width - marginSides);
-                let y = random(marginTop, height - marginSides);
+                let y = random(headerHeight, height - 50);
                 text(random(words), x, y);
             }
         }
