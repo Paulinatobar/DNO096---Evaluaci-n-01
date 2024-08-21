@@ -30,6 +30,7 @@
     <!-- Script p5.js -->
     <script>
         const marginSides = 50; // Márgenes laterales en píxeles
+        const extraHeight = 50; // Altura adicional para el lienzo
 
         let words = ['que', 'tiemble', 'el', 'Estado', 'los', 'cielos', 'calles',
                       'teman', 'jueces', 'judiciales', 'mujeres', 'quitan', 'calma', 'sembraron', 'miedo', 'crecieron',
@@ -40,7 +41,7 @@
 
         function setup() {
             // Crea el lienzo dentro del contenedor del poema
-            const canvas = createCanvas(windowWidth - marginSides * 2, 400); // Altura fija para el poema
+            const canvas = createCanvas(windowWidth - marginSides * 2, windowHeight - marginSides - extraHeight); // Altura del lienzo ajustada
             canvas.parent('poema-container');
             background("#AD1457");
             textFont('Space Mono');
@@ -69,7 +70,8 @@
         }
 
         function windowResized() {
-            resizeCanvas(windowWidth - marginSides * 2, 800);
+            const canvasHeight = windowHeight - marginSides - extraHeight;
+            resizeCanvas(windowWidth - marginSides * 2, canvasHeight);
             background("#AD1457");
 
             const headerHeight = document.querySelector('header').offsetHeight;
