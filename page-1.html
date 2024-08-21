@@ -14,6 +14,7 @@
             <a href="page-2.html">Condiciones</a>
             <a href="page-3.html">Poema Aleatorio</a>
             <a href="page-4.html">Orbit Control</a>
+            <a href="page-5.html" > Apuntar</a>
         </p>
         <h1>Caleidoscopio</h1>
     </header>
@@ -21,8 +22,6 @@
     <aside>
         <button onclick="foto()">🖼️ DESCARGA</button>
     </aside>
-
-    <!-- Script p5.js -->
     <script>
         let symmetry = 8;
         let angle;
@@ -46,7 +45,7 @@
                 if (mouseIsPressed) {
                     for (let i = 0; i < symmetry; i++) {
                         rotate(angle);
-                        stroke("#F8BBD0"); // Cambiado a rosado claro con el símbolo # y comillas dobles
+                        stroke("#F8BBD0");
                         strokeWeight(3);
                         line(lineStartX, lineStartY, lineEndX, lineEndY);
 
@@ -60,7 +59,7 @@
         }
 
         function foto() {
-            saveCanvas("caleidoscopio", "jpg"); // Guarda la imagen con el nombre "caleidoscopio.jpg"
+            saveCanvas("caleidoscopio", "jpg"); 
         }
 
         function windowResized() {
